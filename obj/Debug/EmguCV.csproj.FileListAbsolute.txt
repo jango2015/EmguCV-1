@@ -1,0 +1,10 @@
+f:\users\gabriel\documents\visual studio 2015\Projects\EmguCV\EmguCV\bin\Debug\EmguCV.exe.config
+f:\Users\Gabriel\documents\visual studio 2015\Projects\EmguCV\EmguCV\bin\Debug\EmguCV.exe
+f:\Users\Gabriel\documents\visual studio 2015\Projects\EmguCV\EmguCV\bin\Debug\EmguCV.pdb
+f:\Users\Gabriel\documents\visual studio 2015\Projects\EmguCV\EmguCV\bin\Debug\ZedGraph.dll
+f:\Users\Gabriel\documents\visual studio 2015\Projects\EmguCV\EmguCV\obj\Debug\EmguCV.csprojResolveAssemblyReference.cache
+f:\Users\Gabriel\documents\visual studio 2015\Projects\EmguCV\EmguCV\obj\Debug\EmguCV.Form1.resources
+f:\Users\Gabriel\documents\visual studio 2015\Projects\EmguCV\EmguCV\obj\Debug\EmguCV.Properties.Resources.resources
+f:\Users\Gabriel\documents\visual studio 2015\Projects\EmguCV\EmguCV\obj\Debug\EmguCV.csproj.GenerateResource.Cache
+f:\Users\Gabriel\documents\visual studio 2015\Projects\EmguCV\EmguCV\obj\Debug\EmguCV.exe
+f:\Users\Gabriel\documents\visual studio 2015\Projects\EmguCV\EmguCV\obj\Debug\EmguCV.pdb
