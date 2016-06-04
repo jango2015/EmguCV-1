@@ -40,6 +40,7 @@
             this.txtFacesIdentificadas = new System.Windows.Forms.TextBox();
             this.numFacesIdentificadas = new System.Windows.Forms.TextBox();
             this.textBoxMinJanela = new System.Windows.Forms.TextBox();
+            this.nomeParaSalvar = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.imageBox1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -141,11 +142,19 @@
             this.textBoxMinJanela.TabIndex = 13;
             this.textBoxMinJanela.Text = "25";
             // 
+            // nomeParaSalvar
+            // 
+            this.nomeParaSalvar.Location = new System.Drawing.Point(721, 297);
+            this.nomeParaSalvar.Name = "nomeParaSalvar";
+            this.nomeParaSalvar.Size = new System.Drawing.Size(225, 20);
+            this.nomeParaSalvar.TabIndex = 14;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(958, 416);
+            this.Controls.Add(this.nomeParaSalvar);
             this.Controls.Add(this.textBoxMinJanela);
             this.Controls.Add(this.numFacesIdentificadas);
             this.Controls.Add(this.txtFacesIdentificadas);
@@ -179,6 +188,7 @@
         private System.Windows.Forms.TextBox txtFacesIdentificadas;
         private System.Windows.Forms.TextBox numFacesIdentificadas;
         private System.Windows.Forms.TextBox textBoxMinJanela;
+        private System.Windows.Forms.TextBox nomeParaSalvar;
     }
 }
 

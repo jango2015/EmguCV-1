@@ -42,28 +42,30 @@ namespace EmguCV
         private void ProcessarFrame(object sender, EventArgs arg)
         {
             Image<Bgr, Byte> frame = capturaDaCamera.QueryFrame();
-            imageBox1.Image = frame;
+            //imageBox1.Image = frame;
             if (frame != null)
             {
-                //converte a imagem para uma escala em cinza
+                // converte a imagem para uma escala em cinza
                 Image<Gray, byte> frameCinza = frame.Convert<Gray, byte>();
+                // MessageBox.Show("entrou no frame");
+                // numeroMinimoDeVizinhos = int.Parse(comboBoxMinViz.SelectedText);
+                // fatorDeEscala = int.Parse(comboBoxEscala.SelectedText);
+                // tamanhoDaJanela = int.Parse(textBoxMinJanela.Text);
 
-                //numeroMinimoDeVizinhos = int.Parse(comboBoxMinViz.SelectedText);
-                //fatorDeEscala = int.Parse(comboBoxEscala.SelectedText);
-                //tamanhoDaJanela = int.Parse(textBoxMinJanela.Text);
 
-
-                //detecta faces apartir da imagem em cinza e guarda elas em um array do tipo var
-                var faces =  frameCinza.DetectHaarCascade(haar, 1.1, 4, HAAR_DETECTION_TYPE.DO_CANNY_PRUNING, new Size(25, 25))[0];
+                // detecta faces apartir da imagem em cinza e guarda elas em um array do tipo var
+                var faces = frameCinza.DetectHaarCascade(haar, 1.1, 4, HAAR_DETECTION_TYPE.DO_CANNY_PRUNING, new Size(25, 25));
                 int TotalFaces = faces.Length;
                 numFacesIdentificadas.Text = TotalFaces.ToString();
-               // MessageBox.Show("Total faces detected: " + TotalFaces.ToString());
+                // imageBox1.Image = frameCinza;
+                // MessageBox.Show("Total faces detected: " + TotalFaces.ToString());
+                /*
                 foreach (var face in faces)
                 {
                     frame.Draw(face.rect, new Bgr(Color.Green), 3);
                 }
+                */
             }
-            imageBox1.Image = frame;
         }
 
         /*
@@ -122,7 +124,7 @@ namespace EmguCV
         private void salvarImagem_Click(object sender, EventArgs e)
         {
             Image<Bgr, Byte> Imagem = capturaDaCamera.QueryFrame();
-            Imagem.Save(Environment.CurrentDirectory + "\\imagem.jpg");
+            Imagem.Save(Environment.CurrentDirectory + "\\" + nomeParaSalvar.Text + ".jpg");
         }
 
         private void textBox1_TextChanged(object sender, EventArgs e)
