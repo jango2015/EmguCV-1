@@ -20,8 +20,14 @@ namespace EmguCV
         private bool capturaEmProgresso;        //checa se a captura esta sendo executada
         private HaarCascade haar;
         private int tamanhoDaJanela = 25;
-        private double fatorDeEscala = 1.1;
+        private Double fatorDeEscala = 1.1;
         private int numeroMinimoDeVizinhos = 4;
+
+        Image<Bgr, Byte> frame;
+        Image<Gray, Byte> frameCinza;
+
+        Bitmap[] FacesExt;
+        int numFace = 0;
 
 
         public Form1()
@@ -39,35 +45,83 @@ namespace EmguCV
 
         }
 
-        private void ProcessarFrame(object sender, EventArgs arg)
+
+        private void carregarImagemBtn_Click(object sender, EventArgs e)
         {
-            Image<Bgr, Byte> frame = capturaDaCamera.QueryFrame();
-            //imageBox1.Image = frame;
-            if (frame != null)
+            if (openFileDialog1.ShowDialog() == DialogResult.OK)
             {
-                // converte a imagem para uma escala em cinza
-                Image<Gray, byte> frameCinza = frame.Convert<Gray, byte>();
-                // MessageBox.Show("entrou no frame");
-                // numeroMinimoDeVizinhos = int.Parse(comboBoxMinViz.SelectedText);
-                // fatorDeEscala = int.Parse(comboBoxEscala.SelectedText);
-                // tamanhoDaJanela = int.Parse(textBoxMinJanela.Text);
-
-
-                // detecta faces apartir da imagem em cinza e guarda elas em um array do tipo var
-                var faces = frameCinza.DetectHaarCascade(haar, 1.1, 4, HAAR_DETECTION_TYPE.DO_CANNY_PRUNING, new Size(25, 25));
-                int TotalFaces = faces.Length;
-                numFacesIdentificadas.Text = TotalFaces.ToString();
-                // imageBox1.Image = frameCinza;
-                // MessageBox.Show("Total faces detected: " + TotalFaces.ToString());
-                /*
-                foreach (var face in faces)
-                {
-                    frame.Draw(face.rect, new Bgr(Color.Green), 3);
-                }
-                */
+                Image InputImg = Image.FromFile(openFileDialog1.FileName);
+                frame = new Image<Bgr, byte>(new Bitmap(InputImg));
+                frameCinza = frame.Convert<Gray, byte>();
+                ProcessarFrame();
             }
         }
 
+        private void carregarFrameCamera(object sender, EventArgs e)
+        {
+            frame = capturaDaCamera.QueryFrame();
+            if (frame != null)
+            {
+                frameCinza = frame.Convert<Gray, byte>();
+                ProcessarFrame();
+            }
+        }
+
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////
+        /// <summary>
+        /// ////////////////////FUNCAO USADA PARA PROCESSAR AS FACES//////////////////////////////////////////////
+        /// </summary>
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////
+        private void ProcessarFrame()
+        {
+            if (frame != null)
+            {
+                double.TryParse(comboBoxEscala.Text, out fatorDeEscala);
+                int.TryParse(comboBoxMinViz.Text, out numeroMinimoDeVizinhos);
+                int.TryParse(textBoxMinJanela.Text, out tamanhoDaJanela);
+
+                if (tamanhoDaJanela < 1)
+                {
+                    tamanhoDaJanela = 1;
+                    textBoxMinJanela.Text = tamanhoDaJanela.ToString();
+                }
+
+                imageBox1.Image = frameCinza;
+
+                // detecta faces apartir da imagem em cinza e guarda elas em um array do tipo var
+                var faces = frameCinza.DetectHaarCascade(haar, fatorDeEscala, numeroMinimoDeVizinhos, HAAR_DETECTION_TYPE.DO_CANNY_PRUNING, new Size(tamanhoDaJanela, tamanhoDaJanela))[0];
+                if (faces.Length > 0)
+                {
+                    Bitmap bmpInput = frameCinza.ToBitmap();
+                    Bitmap faceExtraida;
+                    Graphics CanvasFace;
+
+                    FacesExt = new Bitmap[faces.Length];
+                    foreach (var face in faces)
+                    {
+                        frame.Draw(face.rect, new Bgr(Color.Green), 3);
+
+                        faceExtraida = new Bitmap(face.rect.Width, face.rect.Height);
+
+                        //coloca uma imagem vazia como canvas, para ser pintada
+                        CanvasFace = Graphics.FromImage(faceExtraida);
+
+                        CanvasFace.DrawImage(bmpInput, 0, 0, face.rect, GraphicsUnit.Pixel);
+
+                        FacesExt[numFace] = faceExtraida;
+                        numFace++;
+                    }
+
+                    numFace = 0;
+                    pbFacesExtraidas.Image = FacesExt[numFace];
+
+                }
+                numFacesIdentificadas.Text = faces.Length.ToString();
+            }
+            imageBox1.Image = frame;
+            frame = null;
+        }
+    
         /*
         Para mostrar a quantidade de faces identificadas em uma chamada de x funcao:
         int TotalFaces = faces.Length;
@@ -101,14 +155,15 @@ namespace EmguCV
                 {  //if camera is getting frames then stop the capture and set button Text
                     // "Start" for resuming capture
                     iniciarBT.Text = "Iniciar!"; //
-                    Application.Idle -= ProcessarFrame;
+                    Application.Idle -= carregarFrameCamera;
+                    //imageBox1.Image = EmguCV ;
                 }
                 else
                 {
                     //if camera is NOT getting frames then start the capture and set button
                     // Text to "Stop" for pausing capture
                     iniciarBT.Text = "Parar";
-                    Application.Idle += ProcessarFrame;
+                    Application.Idle += carregarFrameCamera;
                 }
 
                 capturaEmProgresso = !capturaEmProgresso;
@@ -135,6 +190,35 @@ namespace EmguCV
         private void textBox4_TextChanged(object sender, EventArgs e)
         {
 
+        }
+
+        private void openFileDialog1_FileOk(object sender, CancelEventArgs e)
+        {
+
+        }
+
+        private void nomeParaSalvar_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void textBoxNomeDaImagem_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btPre_Click(object sender, EventArgs e)
+        {
+            if(numFace > 0)
+                numFace--;
+            pbFacesExtraidas.Image = FacesExt[numFace];
+        }
+
+        private void btPos_Click(object sender, EventArgs e)
+        {
+            if(numFace < FacesExt.Length)
+                numFace++;
+            pbFacesExtraidas.Image = FacesExt[numFace];
         }
     }
 }

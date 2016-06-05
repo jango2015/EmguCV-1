@@ -41,7 +41,14 @@
             this.numFacesIdentificadas = new System.Windows.Forms.TextBox();
             this.textBoxMinJanela = new System.Windows.Forms.TextBox();
             this.nomeParaSalvar = new System.Windows.Forms.TextBox();
+            this.textBoxNomeDaImagem = new System.Windows.Forms.TextBox();
+            this.carregarImagemBtn = new System.Windows.Forms.Button();
+            this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
+            this.pbFacesExtraidas = new System.Windows.Forms.PictureBox();
+            this.btPre = new System.Windows.Forms.Button();
+            this.btPos = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.imageBox1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pbFacesExtraidas)).BeginInit();
             this.SuspendLayout();
             // 
             // imageBox1
@@ -49,6 +56,7 @@
             this.imageBox1.Location = new System.Drawing.Point(12, 12);
             this.imageBox1.Name = "imageBox1";
             this.imageBox1.Size = new System.Drawing.Size(703, 371);
+            this.imageBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.imageBox1.TabIndex = 2;
             this.imageBox1.TabStop = false;
             this.imageBox1.Click += new System.EventHandler(this.imageBox1_Click);
@@ -65,7 +73,7 @@
             // 
             // salvarImagem
             // 
-            this.salvarImagem.Location = new System.Drawing.Point(12, 389);
+            this.salvarImagem.Location = new System.Drawing.Point(783, 360);
             this.salvarImagem.Name = "salvarImagem";
             this.salvarImagem.Size = new System.Drawing.Size(91, 23);
             this.salvarImagem.TabIndex = 4;
@@ -76,6 +84,11 @@
             // comboBoxEscala
             // 
             this.comboBoxEscala.FormattingEnabled = true;
+            this.comboBoxEscala.Items.AddRange(new object[] {
+            "1.1",
+            "1.2",
+            "1.3",
+            "1.4"});
             this.comboBoxEscala.Location = new System.Drawing.Point(825, 18);
             this.comboBoxEscala.Name = "comboBoxEscala";
             this.comboBoxEscala.Size = new System.Drawing.Size(121, 21);
@@ -112,6 +125,11 @@
             // comboBoxMinViz
             // 
             this.comboBoxMinViz.FormattingEnabled = true;
+            this.comboBoxMinViz.Items.AddRange(new object[] {
+            "1",
+            "2",
+            "3",
+            "4"});
             this.comboBoxMinViz.Location = new System.Drawing.Point(825, 45);
             this.comboBoxMinViz.Name = "comboBoxMinViz";
             this.comboBoxMinViz.Size = new System.Drawing.Size(121, 21);
@@ -119,7 +137,7 @@
             // 
             // txtFacesIdentificadas
             // 
-            this.txtFacesIdentificadas.Location = new System.Drawing.Point(721, 222);
+            this.txtFacesIdentificadas.Location = new System.Drawing.Point(721, 98);
             this.txtFacesIdentificadas.Name = "txtFacesIdentificadas";
             this.txtFacesIdentificadas.ReadOnly = true;
             this.txtFacesIdentificadas.Size = new System.Drawing.Size(153, 20);
@@ -129,7 +147,7 @@
             // 
             // numFacesIdentificadas
             // 
-            this.numFacesIdentificadas.Location = new System.Drawing.Point(880, 222);
+            this.numFacesIdentificadas.Location = new System.Drawing.Point(880, 98);
             this.numFacesIdentificadas.Name = "numFacesIdentificadas";
             this.numFacesIdentificadas.Size = new System.Drawing.Size(66, 20);
             this.numFacesIdentificadas.TabIndex = 12;
@@ -144,16 +162,77 @@
             // 
             // nomeParaSalvar
             // 
-            this.nomeParaSalvar.Location = new System.Drawing.Point(721, 297);
+            this.nomeParaSalvar.Location = new System.Drawing.Point(721, 334);
             this.nomeParaSalvar.Name = "nomeParaSalvar";
             this.nomeParaSalvar.Size = new System.Drawing.Size(225, 20);
             this.nomeParaSalvar.TabIndex = 14;
+            this.nomeParaSalvar.TextChanged += new System.EventHandler(this.nomeParaSalvar_TextChanged);
+            // 
+            // textBoxNomeDaImagem
+            // 
+            this.textBoxNomeDaImagem.Location = new System.Drawing.Point(783, 308);
+            this.textBoxNomeDaImagem.Name = "textBoxNomeDaImagem";
+            this.textBoxNomeDaImagem.ReadOnly = true;
+            this.textBoxNomeDaImagem.Size = new System.Drawing.Size(100, 20);
+            this.textBoxNomeDaImagem.TabIndex = 15;
+            this.textBoxNomeDaImagem.Text = "Nome da imagem";
+            this.textBoxNomeDaImagem.TextChanged += new System.EventHandler(this.textBoxNomeDaImagem_TextChanged);
+            // 
+            // carregarImagemBtn
+            // 
+            this.carregarImagemBtn.Location = new System.Drawing.Point(12, 389);
+            this.carregarImagemBtn.Name = "carregarImagemBtn";
+            this.carregarImagemBtn.Size = new System.Drawing.Size(119, 23);
+            this.carregarImagemBtn.TabIndex = 16;
+            this.carregarImagemBtn.Text = "Carregar Imagem";
+            this.carregarImagemBtn.UseVisualStyleBackColor = true;
+            this.carregarImagemBtn.Click += new System.EventHandler(this.carregarImagemBtn_Click);
+            // 
+            // openFileDialog1
+            // 
+            this.openFileDialog1.FileName = "openFileDialog1";
+            this.openFileDialog1.FileOk += new System.ComponentModel.CancelEventHandler(this.openFileDialog1_FileOk);
+            // 
+            // pbFacesExtraidas
+            // 
+            this.pbFacesExtraidas.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.pbFacesExtraidas.Location = new System.Drawing.Point(746, 124);
+            this.pbFacesExtraidas.Name = "pbFacesExtraidas";
+            this.pbFacesExtraidas.Size = new System.Drawing.Size(185, 141);
+            this.pbFacesExtraidas.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pbFacesExtraidas.TabIndex = 17;
+            this.pbFacesExtraidas.TabStop = false;
+            // 
+            // btPre
+            // 
+            this.btPre.Location = new System.Drawing.Point(746, 271);
+            this.btPre.Name = "btPre";
+            this.btPre.Size = new System.Drawing.Size(75, 23);
+            this.btPre.TabIndex = 18;
+            this.btPre.Text = "<";
+            this.btPre.UseVisualStyleBackColor = true;
+            this.btPre.Click += new System.EventHandler(this.btPre_Click);
+            // 
+            // btPos
+            // 
+            this.btPos.Location = new System.Drawing.Point(856, 271);
+            this.btPos.Name = "btPos";
+            this.btPos.Size = new System.Drawing.Size(75, 23);
+            this.btPos.TabIndex = 19;
+            this.btPos.Text = ">";
+            this.btPos.UseVisualStyleBackColor = true;
+            this.btPos.Click += new System.EventHandler(this.btPos_Click);
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(958, 416);
+            this.Controls.Add(this.btPos);
+            this.Controls.Add(this.btPre);
+            this.Controls.Add(this.pbFacesExtraidas);
+            this.Controls.Add(this.carregarImagemBtn);
+            this.Controls.Add(this.textBoxNomeDaImagem);
             this.Controls.Add(this.nomeParaSalvar);
             this.Controls.Add(this.textBoxMinJanela);
             this.Controls.Add(this.numFacesIdentificadas);
@@ -170,6 +249,7 @@
             this.Text = "Form1";
             this.Load += new System.EventHandler(this.Form1_Load);
             ((System.ComponentModel.ISupportInitialize)(this.imageBox1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pbFacesExtraidas)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -189,6 +269,12 @@
         private System.Windows.Forms.TextBox numFacesIdentificadas;
         private System.Windows.Forms.TextBox textBoxMinJanela;
         private System.Windows.Forms.TextBox nomeParaSalvar;
+        private System.Windows.Forms.TextBox textBoxNomeDaImagem;
+        private System.Windows.Forms.Button carregarImagemBtn;
+        private System.Windows.Forms.OpenFileDialog openFileDialog1;
+        private System.Windows.Forms.PictureBox pbFacesExtraidas;
+        private System.Windows.Forms.Button btPre;
+        private System.Windows.Forms.Button btPos;
     }
 }
 
